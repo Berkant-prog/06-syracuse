@@ -1,11 +1,12 @@
 #### Fonctions secondaires
-
+"""Ce module contient les fonctions de syracus"""
 
 # imports
 from plotly.graph_objects import Scatter, Figure
 
 ### NE PAS MODIFIER ###
 def syr_plot(lsyr):
+    """Trace la suite de Syracuse"""
     title = "Syracuse" + " (n = " + str(lsyr[0]) + " )"
     fig = Figure({  'layout':   { 'title': {'text': title},
                                 'xaxis': {'title': {'text':"x"}},
@@ -19,7 +20,6 @@ def syr_plot(lsyr):
     fig.add_trace(t)
     fig.show()
     # fig.write_html('fig.html', include_plotlyjs='cdn')
-    return None
 #######################
 
 def syracuse_l(n):
@@ -31,10 +31,15 @@ def syracuse_l(n):
     Returns:
         list: la suite de Syracuse de source n
     """
-
-    # votre code ici 
-    l = [ ]
+    l = [n]
+    while n != 1:
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+        l.append(n)
     return l
+
 
 def temps_de_vol(l):
     """Retourne le temps de vol d'une suite de Syracuse
@@ -45,11 +50,10 @@ def temps_de_vol(l):
     Returns:
         int: le temps de vol
     """
-    
-    # votre code ici
-
-    n = 0
+    n = len(l)-1
     return n
+
+
 
 def temps_de_vol_en_altitude(l):
     """Retourne le temps de vol en altitude d'une suite de Syracuse
@@ -62,9 +66,13 @@ def temps_de_vol_en_altitude(l):
     """
 
     # votre code ici
+    for i, elt in enumerate(l):
+        if elt < l[0]:
+            return i - 1
+    return len(l) - 1  # Retourne la longueur - 1 si jamais l'altitude n'est jamais inférieure
 
-    n = 0
-    return n
+
+
 
 
 def altitude_maximale(l):
@@ -76,19 +84,12 @@ def altitude_maximale(l):
     Returns:
         int: l'altitude maximale
     """
-    
-    # votre code ici
-    
-    n = 0
-    return n
+    return max(l)
 
 
 #### Fonction principale
-
-
 def main():
-
-    # vos appels à la fonction secondaire ici
+    """fonction principale"""
     lsyr = syracuse_l(15)
     syr_plot(lsyr)
     print(temps_de_vol(lsyr))
